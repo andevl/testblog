@@ -7,19 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<nav class="navbar navbar-default" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<a class="navbar-brand" href="<%= root_path %>">Title</a>
+		</div>
+	
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<% if user_signed_in? %>
+					<li><%= link_to "Submit Link", new_link_path %></li>
+					<li><%= link_to "Account", edit_user_registration_path %></li>
+					<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+				<% else %>
+					<li><%= link_to "Sign up", new_user_registration_path %></li>
+					<li><%= link_to "Sign in", new_user_session_path %></li>
+				<% end %>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
 
-<% if user_signed_in? %>
-	<ul>
-		<li><%= link_to "Submit Link", new_link_path %></li>
-		<li><%= link_to "Account", edit_user_registration_path %></li>
-		<li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-	</ul>
-<% else %>
-	<ul>
-		<li><%= link_to "Sign up", new_user_registration_path %></li>
-		<li><%= link_to "Sign in", new_user_session_path %></li>
-	</ul>
-<% end %>
 
 <%= yield %>
 
