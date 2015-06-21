@@ -16,3 +16,32 @@
 		<%= link_to "Destroy", @link, method: :delete, data: { confirm: 'are you sure'}, class: "btn btn-default" %>
 	</div>
 <% end %>
+
+<h3 class="comments-title">
+	<%= @link.comments.count %> Comments
+</h3>
+
+<div id="comments">
+
+
+	<%= div_for(@link.comments) do |comment| %>
+	<p><%= comment.body %></p>
+	<small>Submitted by <strong><%= time_ago_in_words(comment.created_at) %></strong> by <%= comment.user_id %> ID</small>
+<div class="btn-group pull-right">
+	<% if comment.user == current_user %>
+		<%= link_to "Edit", edit_comment_path(comment) %>
+		<%= link_to "Destroy", comment, method: :delete, data: {confirm: 'are u sure'} %>
+	<% end %>
+</div>
+<% end %>
+
+
+
+</div>
+<%= simple_form_for [@link, Comment.new] do |f| %>
+	<div class="field">
+		<%= f.text_area :body, class: "form-control" %>
+	</div>
+	<br>
+	<%= f.submit "Add Comment", class: "btn btn-primary" %>
+<% end %>
